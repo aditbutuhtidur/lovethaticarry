@@ -57,11 +57,16 @@ h1,h2,h3{font-family:'Baloo 2', cursive;}
 
 /* ============ CURSOR SPARKLE ============ */
 .sparkle{
-  position:fixed; width:8px; height:8px; pointer-events:none; z-index:9999;
-  background:radial-gradient(circle, #fff 0%, var(--gold) 40%, transparent 70%);
-  border-radius:50%;
-  animation:sparkle-fade 0.9s ease-out forwards;
+  position: fixed;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+  z-index: 9999;
+  background: radial-gradient(circle, #fff 0%, var(--gold) 40%, transparent 70%);
+  border-radius: 50%;
+  animation: sparkle-fade 1.2s ease-out forwards;
 }
+
 @keyframes sparkle-fade{
   0%{opacity:1; transform:scale(1) translateY(0);}
   100%{opacity:0; transform:scale(0.2) translateY(-24px);}
@@ -623,6 +628,30 @@ footer{
 /* =========================================================
    CUSTOMIZABLE DATA — edit these arrays/strings freely
    ========================================================= */
+setInterval(() => {
+    const heart = document.createElement("div");
+
+    heart.innerHTML = ["💗","💕","❤️","🌸","✨"][Math.floor(Math.random()*5)];
+
+    heart.style.position = "fixed";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.bottom = "-30px";
+    heart.style.fontSize = (18 + Math.random()*18) + "px";
+    heart.style.pointerEvents = "none";
+    heart.style.zIndex = "20";
+    heart.style.transition = "transform 8s linear, opacity 8s linear";
+
+    document.body.appendChild(heart);
+
+    requestAnimationFrame(() => {
+        heart.style.transform =
+            `translate(${(Math.random()-0.5)*100}px,-120vh) rotate(${Math.random()*720}deg)`;
+        heart.style.opacity = "0";
+    });
+
+    setTimeout(() => heart.remove(), 8000);
+}, 500);
+
 const CONFIG = {
   welcomeName: "Welcome, my tunas bunga", // shown right after the surprise opens
   loveLetter:
@@ -653,7 +682,7 @@ gallery: [
     caption: "Bakery Day"
   },
   {
-    image: "images/Gramedia DAy.jpeg",
+    image: "images/Gramedia Day.jpeg",
     caption: "That Gramedia Date"
   },
   {
@@ -665,7 +694,7 @@ gallery: [
     caption: "Pool Day"
   },
   {
-    image: "images/photobooth.jpeg",
+    image: "images/Photobooth.jpeg",
     caption: "First Photobooth Photo"
   },
 ],
@@ -718,7 +747,7 @@ gallery: [
   ],
 
   // COUNTDOWN START DATE — set this to the date you started dating (YYYY, MM(0-indexed), DD)
-  startDate: new Date(2026, 1, 3),
+  startDate: new Date(2026, 1, 2),
 };
 
 /* =========================================================
@@ -727,7 +756,7 @@ gallery: [
 (function initPetals(){
   const layer = document.getElementById('petal-layer');
   const icons = ['🌸','💮','🌷','✨','💗'];
-  const count = window.innerWidth < 640 ? 14 : 26;
+  const count = window.innerWidth < 640 ? 30 : 45;
   for(let i=0;i<count;i++){
     const el = document.createElement('div');
     el.className = 'petal';
@@ -805,7 +834,7 @@ const musicToggle = document.getElementById('music-toggle');
 let musicStarted = false;
 
 document.getElementById('open-surprise-btn').addEventListener('click', ()=>{
-  launchConfetti(110);
+  launchConfetti(window.innerWidth < 640 ? 180 : 110);
   landing.classList.add('hide');
 
   // try to start music (REPLACE MUSIC: audio src is empty by default)
